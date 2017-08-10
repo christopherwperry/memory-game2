@@ -1,0 +1,39 @@
+body {
+  text-align: center;
+}
+
+.game-container {
+  display: flex;
+}
+
+.game-info {
+  display: flex;
+}
+.gameboard {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 5vw;
+  margin-right: 5vw;
+}
+
+.card {
+  width: 20vw;
+  height: 15vw;
+  margin-bottom: 2vh;
+  color: white;
+  border: solid black;
+
+}
+
+.hidden {
+  transform: rotateY(180deg);
+  transition: all 1s;
+}
+
+.shown {
+  transform: rotateY(360deg);
+  transition: all 1s;
+  color: black;
+}
