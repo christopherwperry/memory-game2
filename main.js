@@ -20,10 +20,11 @@ function easyGame(){
     </div>
   </div>`;
   createCards();
+  createLives();
+  createTimer();
 }
 
 function hardGame(){
-  document.body.innerHTML = "";
   document.body.innerHTML = `
   <header>
     <h1>[meme]ory Game</h1>
@@ -36,6 +37,8 @@ function hardGame(){
     </div>
   </div>`;
   createCards();
+  createLives();
+  createTimer();
 }
 
 function shuffleCards(){
@@ -51,19 +54,66 @@ function shuffleCards(){
 }
 
 function createCards(){
-  let game_container = document.querySelector(".game-container");
-  let gameboard = document.querySelector(".gameboard");
-  let timer = document.querySelector(".timer");
-  let lives = document.querySelector(".lives");
   shuffleCards();
-  for (let i = 0; i < cards.length; i++) {
+  for (let i = 0; i < cards.length; i++){
     let one_card = document.createElement("div");
     one_card.setAttribute("class", "card hidden");
-    one_card.addEventListener("click", function(){
-      this.classList.remove("hidden");
-      this.classList.add("shown");
-    }, false);
+    one_card.addEventListener("click", revealCards, false);
     one_card.innerHTML = cards[i];
-    gameboard.appendChild(one_card);
+    document.querySelector(".gameboard").appendChild(one_card);
   }
+};
+
+function createLives(){
+  for (let i = 0; i < 12; i++){
+    let one_life = document.createElement("div");
+    one_life.setAttribute("class", "life");
+    document.querySelector(".lives").appendChild(one_life);
+  }
+}
+
+function createTimer(){
+  let timer = document.querySelector(".timer");
+};
+
+function revealCards(){
+  if (hand.length === 0){
+  this.classList.remove("hidden");
+  this.classList.add("shown");
+  hand.push(this);
+} else if (hand.length === 1){
+  this.classList.remove("hidden");
+  this.classList.add("shown");
+  hand.push(this);
+  setTimeout(clearCards, 1000);
+  }
+};
+
+function clearCards(){
+  if (hand[0].innerHTML === hand[1].innerHTML){
+  score +=2;
+    if (score === 20) {
+    setTimeout(gameVictory, 250);
+    } else {
+      hand[0].removeEventListener("click", revealCards, false);
+      hand[1].removeEventListener("click", revealCards, false);
+      hand.pop();
+      hand.pop();
+    }
+  } else {
+    hand[0].classList.remove("shown");
+    hand[0].classList.add("hidden");
+    hand[1].classList.remove("shown");
+    hand[1].classList.add("hidden");
+    hand.pop();
+    hand.pop();
+  }
+}
+
+function gameVictory(){
+
+}
+
+function gameLoss(){
+
 }
